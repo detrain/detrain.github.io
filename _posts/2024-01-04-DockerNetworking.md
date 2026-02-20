@@ -48,7 +48,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 1        0     0 RETURN     all  --  *      *       0.0.0.0/0            0.0.0.0/0
 ```
 
-One can see, in the filter table's FORWARD chain, rule **3** accepts the forwarding of RELATED, and ESTABLISHED connections going out on the interface *docker0*. This allows outbound traffic to return back into the `bridge` network, as any traffic going out will have related or an laready established connection in regards to iptables. Next we see that the next, rule **4**, in the FORWARD chain relates to any traffic going into the virtual interface *docker0* will jump to the DOCKER chain to be further processed, in my case I do not have any published ports so this chain is empty. However, whenever you do publish a port you can see the rule get populated! For example:
+One can see, in the filter table's FORWARD chain, rule **3** accepts the forwarding of RELATED, and ESTABLISHED connections going out on the interface *docker0*. This allows outbound traffic to return back into the `bridge` network, as any traffic going out will have related or an already established connection in regards to iptables. Next we see that the next, rule **4**, in the FORWARD chain relates to any traffic going into the virtual interface *docker0* will jump to the DOCKER chain to be further processed, in my case I do not have any published ports so this chain is empty. However, whenever you do publish a port you can see the rule get populated! For example:
 
 ```bash
 detrain@detrain:~$ docker run -d --rm -p 80:80 nginx
@@ -189,3 +189,4 @@ This demo will showcase how to create a new custom network, and show one how to 
 
 ## Summary
 We dived into some of the **Docker** default iptables rules and how we can look through them to identify the various flows of network traffic. In addition, one should be comfortable with creating their own custom network and understand how to connect/disconnect a container from a network.
+
